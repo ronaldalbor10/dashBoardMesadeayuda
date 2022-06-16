@@ -1,0 +1,13 @@
+.bg-login-image2 {
+    /*background: url("/img/csm_AdobeStock_201042260-nb_3a30aac79c.jpg");*/
+    background: url("/img/Fondo Bienestar.jpg");
+    
+    /*background: url("/img/data-analytics.jpg");*/
+    /*background: url("/img/errores_google_analytics.png");*/
+    /*background: url("/img/informe-de-google-analytics.png");*/
+    /*background: url("/img/technology-cycle-brightedge.webp");
+    /*background: url("/img/jgXYNK8U4o4itGBBMRtCKa-970-80.jpg.webp");*/
+
+    background-position: center;
+    background-size: cover;
+  }

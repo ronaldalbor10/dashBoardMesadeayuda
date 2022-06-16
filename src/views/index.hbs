@@ -1,0 +1,141 @@
+
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                        <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+                        <a href="#" id="filtroBtn" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm" title="Ocultar"><i
+                                class="fas fa-filter fa-sm text-white-50"></i> Filtrar</a>
+                    </div>
+                    <form action="/" method="post">
+                        <div class="mb-4" id="filtroDV">
+                            <div class="card border-left-secondary shadow h-100 py-2">
+                                <div class="card-body">
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col-md-6">
+                                            <div class="mb-2">
+                                                <label for="fecha1" class="form-label text-xs font-weight-bold text-secondary text-uppercase">Fecha inicial</label>
+                                                <input type="date" name="fecha1" class="form-control form-control-sm" id="fecha1">
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-2">
+                                                <label for="fecha2" class="form-label text-xs font-weight-bold text-secondary text-uppercase">Fecha final</label>
+                                                <input type="date" name="fecha2" class="form-control form-control-sm" id="fecha2">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{#if (ifCond user.isadmin 1 true) }}
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="col">
+                                            <div class="mb-2">
+                                                <label for="agente" class="form-label text-xs font-weight-bold text-secondary text-uppercase">Seleccione el agente</label>
+                                                
+                                                <input class="form-control form-control-sm" list="agentes" name="agente" id="agente" value="{{agente}}">
+                                                <datalist id="agentes">
+                                                    {{#each agentes}}
+                                                    <option value="{{this.staff_id}}">{{capitalWords this.firstname}} {{capitalWords this.lastname}}</option>
+                                                    {{/each}}
+                                                </datalist>    
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {{/if}}
+                                    <div class="row no-gutters align-items-center">
+                                        <div class="d-grid gap-2">
+                                            <button class="btn btn-primary btn-sm" type="submit"><i class="fas fa-search fa-sm text-white-50 me-2"></i>Buscar</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    
+
+                    
+                    {{#if (ifCond user.isadmin 1 true) }}
+                        {{>dashboardAdmin}}
+                    {{else}}
+                        {{>dashboardAgent}}
+                    {{/if}}
+
+                    
+
+                    <div class="row">
+
+                        <!-- Pie Chart -->
+                        <div class="col-xl-12 col-lg-11">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Tickets x servicio <span id="subPieChartIndex" class="blockquote-footer">Todos</span></h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Menu:</div>
+                                            <a class="dropdown-item" href="#myPieChartTxS" onclick="ajaxGetPieChart('myPieChartTxS','ticketxservicio','open');">Abiertos</a>
+                                            <a class="dropdown-item" href="#myPieChartTxS" onclick="ajaxGetPieChart('myPieChartTxS','ticketxservicio','overdue');">Fuera de tiempo</a>
+                                            <a class="dropdown-item" href="#myPieChartTxS" onclick="ajaxGetPieChart('myPieChartTxS','ticketxservicio','closed');">Cerrados</a>
+                                            <a class="dropdown-item" href="#myPieChartTxS" onclick="ajaxGetPieChart('myPieChartTxS','ticketxservicio','');">Todos</a>
+                                            <!--<a class="dropdown-item" href="#">Another action</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Something else here</a>-->
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="chart-pie pt-4 pb-2">
+                                        <canvas id="myPieChartTxS"></canvas>
+                                    </div>
+                                    <div class="mt-4 text-center small" id="LabelsmyPieChartTxS">
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="row">
+                         <!-- Area Chart -->
+                        <div class="col-xl-8 col-lg-7">
+                            <div class="card shadow mb-4">
+                                <!-- Card Header - Dropdown -->
+                                <div
+                                    class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+                                    <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                                    <div class="dropdown no-arrow">
+                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink"
+                                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
+                                        </a>
+                                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in"
+                                            aria-labelledby="dropdownMenuLink">
+                                            <div class="dropdown-header">Dropdown Header:</div>
+                                            <a class="dropdown-item" href="#">Action</a>
+                                            <a class="dropdown-item" href="#">Another action</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item" href="#">Something else here</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- Card Body -->
+                                <div class="card-body">
+                                    <div class="chart-area">
+                                        <canvas id="myAreaChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                   
+
